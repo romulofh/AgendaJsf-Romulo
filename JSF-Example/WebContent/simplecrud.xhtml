@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<head>
+	<title>Contatos</title>
+</head>
+
+<body>
+	<h3>Meus contatos</h3>
+	<h:form rendered="#{not empty contatoCrudBean.list}">
+		<h:dataTable value="#{contatoCrudBean.list}" var="item">
+			<h:column><f:facet name="header">ID</f:facet>#{item.id}</h:column>
+			<h:column><f:facet name="header">Nome</f:facet>#{item.name}</h:column>
+			<h:column><f:facet name="header">Cpf</f:facet>#{item.cpf}</h:column>
+			<h:column><f:facet name="header">Email</f:facet>#{item.email}</h:column>
+			<h:column><f:facet name="header">Ddd</f:facet>#{item.telefone.ddd}</h:column>
+			<h:column><f:facet name="header">Numero</f:facet>#{item.telefone.numero}</h:column>
+			<h:column>
+				<h:commandButton value="edit" action="#{contatoCrudBean.edit(item)}" />
+			</h:column>
+			<h:column>
+				<h:commandButton value="delete" action="#{contatoCrudBean.delete(item)}" />
+			</h:column>
+		</h:dataTable>
+	</h:form>
+
+	<h:panelGroup rendered="#{empty contatoCrudBean.list}">
+		<p>Você não possui contatos</p>
+	</h:panelGroup>
+
+	<h:panelGroup rendered="#{!contatoCrudBean.edit}">
+		<h3>Adicionar contato</h3>
+		<h:form>
+			<p>Nome: <h:inputText value="#{contatoCrudBean.item.name}" /></p>
+			<p>Cpf: <h:inputText value="#{contatoCrudBean.item.cpf}" /></p>
+			<p>Email: <h:inputText value="#{contatoCrudBean.item.email}" /></p>
+			<h4>Telefone</h4>
+			<p>Ddd: <h:inputText value="#{contatoCrudBean.item.telefone.ddd}" /></p>
+			<p>Numero: <h:inputText value="#{contatoCrudBean.item.telefone.numero}" /></p>
+			<p>
+				<h:commandButton value="add" action="#{contatoCrudBean.add}" />
+				
+			</p>
+		</h:form>
+	</h:panelGroup>
+	
+	<h:panelGroup rendered="#{contatoCrudBean.edit}">
+		<h3>Editar contato #{contatoCrudBean.item.id}</h3>
+		<h:form>
+			<p>Name: <h:inputText value="#{contatoCrudBean.item.name}" /></p>
+			<p>Cpf: <h:inputText value="#{contatoCrudBean.item.cpf}" /></p>
+			<p>Email: <h:inputText value="#{contatoCrudBean.item.email}" /></p>
+			<h4>Telefone</h4>
+			<p>Ddd: <h:inputText value="#{contatoCrudBean.item.telefone.ddd}" /></p>
+			<p>Numero: <h:inputText value="#{contatoCrudBean.item.telefone.numero}" /></p>
+			<p>
+				<h:commandButton value="save" action="#{contatoCrudBean.saveEdit}" />
+				<h:commandButton value="cancel" action="#{contatoCrudBean.cancelEdit}" />
+			</p>
+		</h:form>
+	</h:panelGroup>
+	<p>
+		<a href="#{appUrlStore.baseUrl}">Voltar</a>
+	</p>
+</body>
+</html>

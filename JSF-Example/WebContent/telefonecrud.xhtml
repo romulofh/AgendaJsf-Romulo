@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<head>
+	<title>Agenda</title>
+</head>
+
+<body>
+	<h3>Meus contatos</h3>
+	<h:form rendered="#{not empty telefoneCrudBean.list}">
+		<h:dataTable value="#{telefoneCrudBean.list}" var="item">
+			<h:column><f:facet name="header">ID</f:facet>#{item.id}</h:column>
+			<h:column><f:facet name="header">DDD</f:facet>#{item.ddd}</h:column>
+			<h:column><f:facet name="header">Numero</f:facet>#{item.numero}</h:column>
+			<h:column>
+				<h:commandButton value="edit" action="#{telefoneCrudBean.edit(item)}" />
+			</h:column>
+			<h:column>
+				<h:commandButton value="delete" action="#{telefoneCrudBean.delete(item)}" />
+			</h:column>
+		</h:dataTable>
+	</h:form>
+
+	<h:panelGroup rendered="#{empty telefoneCrudBean.list}">
+		<p>Você não possui numeros cadastrados</p>
+	</h:panelGroup>
+
+	<h:panelGroup rendered="#{!telefoneCrudBean.edit}">
+		<h3>Adicionar contato</h3>
+		<h:form>
+			<p>DDD: <h:inputText value="#{telefoneCrudBean.item.ddd}" /></p>
+			<p>Numero: <h:inputText value="#{telefoneCrudBean.item.numero}" /></p>
+			<p>
+				<h:commandButton value="add" action="#{telefoneCrudBean.add}" />
+				<h:commandButton value="reset" action="#{telefoneCrudBean.resetAdd}" />
+			</p>
+		</h:form>
+	</h:panelGroup>
+	
+	<h:panelGroup rendered="#{telefoneCrudBean.edit}">
+		<h3>Editar telefone #{telefoneCrudBean.item.id}</h3>
+		<h:form>
+			<p>DDD: <h:inputText value="#{telefoneCrudBean.item.ddd}" /></p>
+			<p>Numero: <h:inputText value="#{telefoneCrudBean.item.numero}" /></p>
+			<p>
+				<h:commandButton value="save" action="#{telefoneCrudBean.saveEdit}" />
+				<h:commandButton value="cancel" action="#{telefoneCrudBean.cancelEdit}" />
+			</p>
+		</h:form>
+	</h:panelGroup>
+	<p>
+		<a href="#{appUrlStore.baseUrl}">Voltar</a>
+	</p>
+</body>
+</html>
